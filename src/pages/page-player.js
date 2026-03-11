@@ -2,6 +2,7 @@ import { audioPlayer, playSong, currentSong, playNextSong, playPreviousSong } fr
 import formatTimestamp from '../lib/formatTimestamp.js'
 
 customElements.define("page-player", class extends HTMLElement {
+  updatingTime = true;
 
   connectedCallback() {
     this.render();
@@ -110,6 +111,12 @@ customElements.define("page-player", class extends HTMLElement {
     // Interaction avec la progress bar
     this.progressBar.addEventListener('change', () => {
       audioPlayer.currentTime = this.progressBar.value;
+      this.updatingTime = true;
+    })
+    this.progressBar.addEventListener('mousedown', () => this.updatingTime = false)
+    this.progressBar.addEventListener('input', () => {
+      if (!currentSong) return
+      this.timeCurrent.innerText = formatTimestamp(this.progressBar.value);
     })
 
   }
@@ -133,8 +140,10 @@ customElements.define("page-player", class extends HTMLElement {
 
   // Mise à jour de l'affichage du temps écoulé
   updateCurrentTime() {
-    this.timeCurrent.textContent = formatTimestamp(audioPlayer.currentTime);
-    this.progressBar.value = audioPlayer.currentTime;
+    if (this.updatingTime) {
+      this.timeCurrent.textContent = formatTimestamp(audioPlayer.currentTime);
+      this.progressBar.value = audioPlayer.currentTime;
+    }
   }
 
   // Mise à jour de l'affichage du bouton play/pause
