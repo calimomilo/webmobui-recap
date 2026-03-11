@@ -90,19 +90,27 @@ customElements.define("page-player", class extends HTMLElement {
     this.updatePlayButton = this.updatePlayButton.bind(this);
 
     // Change les infos quand une nouvelle chanson est chargée
-
+    audioPlayer.addEventListener('loadeddata', this.updatePlayerInfos)
 
     // Change l'affichage du bouton play
-    
+    audioPlayer.addEventListener('play', this.updatePlayButton)
+    audioPlayer.addEventListener('pause', this.updatePlayButton)
 
     // Change l'affichage du temps écoulé
+    audioPlayer.addEventListener('timeupdate', this.updateCurrentTime)
     
-
     // Interaction avec les boutons principaux
-    
+    this.playButton.addEventListener('click', () => {
+      if(!currentSong) return
+      audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause()
+    })
+    this.nextButton.addEventListener('click', playNextSong)
+    this.prevButton.addEventListener('click', playPreviousSong)
 
     // Interaction avec la progress bar
-    
+    this.progressBar.addEventListener('change', () => {
+      audioPlayer.currentTime = this.progressBar.value;
+    })
 
   }
 
@@ -110,10 +118,13 @@ customElements.define("page-player", class extends HTMLElement {
   updatePlayerInfos() {
     if (!currentSong) return
     // infos de la chanson
-    
+    this.songImage.src = currentSong.artist.image_url;
+    this.songTitle.textContent = currentSong.title;
+    this.songArtist.textContent = currentSong.artist.name;
 
     // durée de la chanson
-    
+    this.timeDuration.textContent = formatTimestamp(audioPlayer.duration);
+    this.progressBar.max = audioPlayer.duration;
 
     this.updatePlayButton();
     this.updateCurrentTime();
@@ -122,11 +133,18 @@ customElements.define("page-player", class extends HTMLElement {
 
   // Mise à jour de l'affichage du temps écoulé
   updateCurrentTime() {
-    
+    this.timeCurrent.textContent = formatTimestamp(audioPlayer.currentTime);
+    this.progressBar.value = audioPlayer.currentTime;
   }
 
   // Mise à jour de l'affichage du bouton play/pause
   updatePlayButton() {
-    
+    this.playButton.querySelector('span').textContent = audioPlayer.paused ? 'play_arrow' : 'pause';
+
+    // if (audioPlayer.isPaused) {
+    //   this.playButton.querySelector('span').textContent = 'play_arrow';
+    // } else {
+    //   this.playButton.querySelector('span').textContent = 'pause';
+    // }
   }
 })

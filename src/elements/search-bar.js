@@ -19,3 +19,5 @@ customElements.define("search-bar", class extends HTMLElement {
 const searchInput = document.querySelector('#search-input');
 const searchButton = document.querySelector('#search-trigger');
 
+searchButton.addEventListener('click', () => searchInput.classList.toggle('active'))
+searchInput.addEventListener('change', () => window.location.hash = `#search/${encodeURIComponent(searchInput.value)}`)

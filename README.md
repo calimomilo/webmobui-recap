@@ -47,6 +47,7 @@ eventListener `hashchange` → appelle `router`
 - `page-artist-songs` et `page-search-songs` héritent de cette classe
 - création des fonctions `getTitle()` et `getSongsData()` dans les pages spécifiques
 - `page-artist-songs` → besoin d'accéder au résultat de la requête dans `getTitle()`, mais les éléments ne sont plus liés, nécessaire de passer par un attribut de la classe
+- !! ajouter les imports des nouvelles pages dans `index.js`!!
 ### Favoris
 - `local-storage.js` → fonctions pour interagir avec localStorage ; gérer le clic + affichage
 - `page-favorite-songs.js` → hérite aussi  de PageSongs

@@ -1,5 +1,5 @@
 customElements.define("artist-cover", class extends HTMLElement {
-  static observedAttributes = []
+  static observedAttributes = ['id', 'name', 'cover']
 
   connectedCallback() {
     this.render()
@@ -11,9 +11,9 @@ customElements.define("artist-cover", class extends HTMLElement {
 
   render() {
     this.innerHTML = `
-      <a href="#artists/:id">
-        <img src=":cover" />
-        <div class="artist-list-item-title">:artist-name</div>
+      <a href="#artists/${this.getAttribute("id")}">
+        <img src="${this.getAttribute("cover")}" />
+        <div class="artist-list-item-title">${this.getAttribute("name")}</div>
       </a>
      `
   }

@@ -22,7 +22,7 @@ const getFavorites = () => {
 const addFavorite = (song) => {
     const favs = getFavorites();
     favs.push(song);
-    setItem('favorites', favs);
+    setItem(FAVORITES_KEY, favs);
 }
 
 const getFavorite = (id) => {

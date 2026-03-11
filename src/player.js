@@ -1,17 +1,18 @@
 // Tag audio
 const audioPlayer = document.querySelector('#audio-player')
 
-let currentSongList = []
-let currentSong = null
+let currentSongList = [];
+let currentSong = null;
 
 const playSong = (song, songs) => {
-  currentSong = song
+  currentSong = song;
   if (songs) {
-    currentSongList = songs
+    currentSongList = songs;
   }
 
   // On donne l'url au player et démarre la lecture
-  
+  audioPlayer.src = currentSong.audio_url;
+  audioPlayer.play();
 }
 
 // Lis la chanson suivante, d'après la chanson en cours

@@ -28,6 +28,7 @@ customElements.define("spot-footer", class extends HTMLElement {
   }
 
   hashChange() {
+    // console.log(this)
     // on prend la première partie du hash
     const current = window.location.hash.split('/')[0]
 

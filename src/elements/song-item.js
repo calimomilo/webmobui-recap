@@ -1,5 +1,5 @@
 customElements.define('song-item', class extends HTMLElement {
-  static observedAttributes = []
+  static observedAttributes = ['title', 'favorite']
 
   connectedCallback() {
     this.render()
@@ -24,5 +24,10 @@ customElements.define('song-item', class extends HTMLElement {
       </div>`
 
     // événements customs
+    const playEvent = new CustomEvent('playsong');
+    const favoriteEvent = new CustomEvent('favoritesong');
+
+    this.querySelector('.play-button').addEventListener('click', () => this.dispatchEvent(playEvent));
+    this.querySelector('.favorite-button').addEventListener('click', () => this.dispatchEvent(favoriteEvent));
   }
 })
